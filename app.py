@@ -57,6 +57,9 @@ if len(audio) > 0:
     # Prepare filename + upload
     ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
     fname = f"voice/{ts}_{uuid.uuid4().hex}.wav"
+ # Prepare filename + upload
+    ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+    fname = f"voice/{ts}_{uuid.uuid4().hex}.wav"
 
     if st.button("💾 Save voice feedback"):
         try:
@@ -72,5 +75,16 @@ if len(audio) > 0:
             row = {
                 "id": str(uuid.uuid4()),
                 "timestamp": datetime.now(timezone.utc).isoformat(),
-                "feed
+                "feedback_type": feedback_type,
+                "feedback_text": transcript or None,
+                "room": room or None,
+                "user_id": user_id or None,
+                "audio_path": fname,
+                "audio_mime": "audio/wav",
+                "source": "streamlit-app",
+            }
+            supabase.table(TABLE).insert(row).execute()
 
+            st.success("Saved! Open the Playback page to listen.")
+        except Exception as e:
+            st.error(f"Save failed: {e}")
