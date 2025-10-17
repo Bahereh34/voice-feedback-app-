@@ -7,5 +7,4 @@ supabase==2.7.4
 streamlit-audiorecorder==0.0.4
 SpeechRecognition==3.10.4
 pydub==0.25.1
-pyaudioop==0.2.1
 python-dotenv==1.0.1
